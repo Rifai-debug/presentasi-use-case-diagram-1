@@ -1,0 +1,1504 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1b">
+<meta name="description" content="Presentasi interaktif Use Case Diagram untuk sistem e-commerce dan penjualan HP.">
+<title>Use Case Diagram | E-Commerce & Penjualan HP</title>
+
+<style>
+:root {
+  --bg: #080d1b;
+  --panel: #101a2d;
+  --panel2: #15233b;
+  --blue: #4d8dff;
+  --cyan: #53e0ed;
+  --white: #f4f7ff;
+  --muted: #9aabc6;
+  --line: #283a58;
+  --green: #52dfa0;
+  --orange: #ffc36c;
+  --pink: #ff82a7;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 15% 0%, #172c50 0%, transparent 38%),
+    radial-gradient(ellipse at 90% 90%, #102b3b 0%, transparent 32%),
+    var(--bg);
+  color: var(--white);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+button { font: inherit; }
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--cyan);
+  outline-offset: 4px;
+}
+
+.topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 20;
+  height: 70px;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: rgba(8,13,27,.88);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(120,160,220,.15);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  letter-spacing: -.3px;
+}
+
+.brand-icon {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: white;
+  background: linear-gradient(135deg, var(--blue), #7459e8);
+  box-shadow: 0 0 25px #4d8dff35;
+}
+
+.brand small {
+  display: block;
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.top-actions {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+
+.btn {
+  border: 1px solid var(--line);
+  color: var(--white);
+  background: #152039;
+  border-radius: 10px;
+  padding: 9px 14px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.btn:hover {
+  border-color: var(--cyan);
+  transform: translateY(-1px);
+}
+
+.btn.primary {
+  color: #07101c;
+  font-weight: 800;
+  border: 0;
+  background: linear-gradient(110deg, var(--cyan), #80f4d3);
+}
+
+.progress-track {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 25;
+  background: #17233a;
+}
+
+.progress-fill {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  transition: width .3s;
+}
+
+main {
+  width: min(1180px, 92%);
+  margin: auto;
+  padding: 112px 0 120px;
+}
+
+.slide {
+  display: none;
+  animation: appear .35s ease;
+}
+
+.slide.active { display: block; }
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 17px;
+}
+
+.eyebrow::before {
+  content: "";
+  height: 2px;
+  width: 24px;
+  background: var(--cyan);
+}
+
+h1, h2, h3, p { margin-top: 0; }
+
+h1 {
+  font-size: clamp(38px, 6.5vw, 76px);
+  line-height: 1.08;
+  letter-spacing: -3px;
+  max-width: 900px;
+  margin-bottom: 25px;
+}
+
+h2 {
+  font-size: clamp(29px, 4vw, 45px);
+  line-height: 1.2;
+  letter-spacing: -1.3px;
+  margin-bottom: 16px;
+}
+
+h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+p { color: var(--muted); }
+
+.gradient-text {
+  background: linear-gradient(100deg, #fff 10%, var(--cyan) 75%, #83a8ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lead {
+  max-width: 760px;
+  font-size: 18px;
+  line-height: 1.9;
+}
+
+.section-head { margin-bottom: 30px; }
+
+.section-head p { max-width: 760px; }
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 36px;
+  align-items: center;
+}
+
+.hero-art {
+  border: 1px solid #304768;
+  border-radius: 28px;
+  padding: 26px;
+  background: linear-gradient(145deg, #172843, #0b1222);
+  box-shadow: 0 30px 90px #0003;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-art::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: #4d8dff20;
+  border-radius: 50%;
+  filter: blur(35px);
+  right: -80px;
+  top: -70px;
+}
+
+.phone {
+  position: relative;
+  z-index: 1;
+  width: 165px;
+  height: 285px;
+  border: 5px solid #6e85a8;
+  border-radius: 28px;
+  padding: 14px 10px;
+  margin: auto;
+  background: #09111f;
+  box-shadow: 0 0 45px #4d8dff24;
+}
+
+.phone-notch {
+  width: 55px;
+  height: 7px;
+  background: #6e85a8;
+  border-radius: 9px;
+  margin: 0 auto 16px;
+}
+
+.phone-screen {
+  height: 224px;
+  padding: 10px;
+  border-radius: 12px;
+  background: linear-gradient(160deg, #1d3c67, #102035);
+}
+
+.phone-screen .fake-product {
+  height: 95px;
+  display: grid;
+  place-items: center;
+  font-size: 43px;
+  background: #274d79;
+  border-radius: 10px;
+  margin: 8px 0;
+}
+
+.fake-line {
+  height: 6px;
+  background: #557293;
+  border-radius: 8px;
+  margin: 8px 0;
+}
+
+.fake-line.short { width: 55%; }
+
+.art-caption {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-top: 18px;
+  color: #c7d6ed;
+  font-size: 13px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 26px;
+}
+
+.tag {
+  font-size: 12px;
+  color: #c5d8f5;
+  background: #172741;
+  border: 1px solid #2c4162;
+  border-radius: 30px;
+  padding: 7px 12px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px;
+  background: linear-gradient(145deg, #131f34dd, #0d1525ee);
+  transition: .25s;
+}
+
+.card:hover {
+  border-color: #4a76aa;
+  transform: translateY(-3px);
+}
+
+.card p:last-child { margin-bottom: 0; }
+
+.card-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  margin-bottom: 17px;
+  font-size: 22px;
+  background: #20385b;
+}
+
+.number {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--cyan);
+  letter-spacing: 1px;
+  margin-bottom: 9px;
+}
+
+.callout {
+  padding: 19px 22px;
+  border-radius: 12px;
+  background: #102b39;
+  border-left: 3px solid var(--cyan);
+  margin-top: 23px;
+  color: #c4e9ed;
+}
+
+.diagram-wrap {
+  overflow-x: auto;
+  border: 1px solid #2c4162;
+  border-radius: 20px;
+  padding: 15px;
+  background:
+    linear-gradient(#ffffff05 1px, transparent 1px),
+    linear-gradient(90deg, #ffffff05 1px, transparent 1px),
+    #0b1322;
+  background-size: 25px 25px;
+}
+
+.diagram {
+  display: block;
+  width: 100%;
+  min-width: 650px;
+  height: auto;
+}
+
+.diagram text {
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.relation-card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.relation-visual {
+  min-height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background: #0b1425;
+  border-radius: 12px;
+  border: 1px solid #233653;
+}
+
+.relation-visual svg {
+  width: 100%;
+  max-width: 370px;
+  height: 76px;
+}
+
+.relation-name {
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.syntax {
+  color: var(--cyan);
+  background: #0c2935;
+  border: 1px solid #1e5260;
+  border-radius: 7px;
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 55px 1fr;
+  gap: 18px;
+  padding-bottom: 25px;
+  position: relative;
+}
+
+.step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  top: 48px;
+  height: calc(100% - 48px);
+  width: 1px;
+  background: #345172;
+}
+
+.step-num {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  background: #193b60;
+  color: var(--cyan);
+  border: 1px solid #35618a;
+}
+
+.step-content {
+  border-bottom: 1px solid #23344f;
+  padding: 8px 0 20px;
+}
+
+.step-content p { margin-bottom: 0; }
+
+.actor-pill {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: #172741;
+  color: #d7e6ff;
+  font-size: 12px;
+  margin: 4px 4px 4px 0;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 570px;
+  text-align: left;
+}
+
+th, td {
+  padding: 15px 18px;
+  border-bottom: 1px solid #24344d;
+  vertical-align: top;
+}
+
+th {
+  color: var(--cyan);
+  background: #14213a;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .7px;
+}
+
+td { color: #c4d1e7; }
+tr:last-child td { border-bottom: 0; }
+
+code {
+  font-family: Consolas, monospace;
+  color: #a6f0ef;
+}
+
+.footer-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 13px max(4%, calc((100% - 1180px)/2));
+  background: rgba(8,13,27,.94);
+  backdrop-filter: blur(18px);
+  border-top: 1px solid #22314a;
+}
+
+.nav-side {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.slide-counter {
+  color: var(--muted);
+  font-size: 12px;
+  min-width: 66px;
+  text-align: center;
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.nav-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 10px;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background: #35445d;
+  transition: .25s;
+}
+
+.nav-dot.active {
+  width: 23px;
+  background: var(--cyan);
+}
+
+.key-hint {
+  color: #7789a5;
+  font-size: 11px;
+}
+
+kbd {
+  border: 1px solid #354661;
+  border-radius: 4px;
+  padding: 2px 5px;
+  color: #b8c9e5;
+}
+
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.check-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #c4d1e7;
+  margin: 12px 0;
+}
+
+.check-list li::before {
+  content: "✓";
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  color: var(--green);
+  background: #17392f;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.mini-label {
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.big-quote {
+  font-size: clamp(24px, 3.5vw, 38px);
+  line-height: 1.5;
+  letter-spacing: -.5px;
+  max-width: 920px;
+  color: #dfeaff;
+}
+
+.center { text-align: center; }
+.center .lead { margin-left: auto; margin-right: auto; }
+.center .tags { justify-content: center; }
+
+@media (max-width: 800px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-art { max-width: 500px; width: 100%; margin: 0 auto; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .topbar { padding: 0 4%; height: 62px; }
+  .progress-track { top: 62px; }
+  main { padding-top: 95px; }
+  .key-hint { display: none; }
+  .footer-nav { padding: 12px 4%; }
+  .brand small { display: none; }
+  h1 { letter-spacing: -1.7px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+@media print {
+  body { background: white; color: #111; }
+  .topbar, .progress-track, .footer-nav { display: none !important; }
+  main { width: 100%; padding: 0; }
+  .slide, .slide.active {
+    display: block !important;
+    page-break-after: always;
+    padding: 25px;
+    background: white;
+    color: #111;
+  }
+  .card, .diagram-wrap, .hero-art, .relation-visual {
+    background: white;
+    color: #111;
+    box-shadow: none;
+    border-color: #bbb;
+  }
+  p, td, .big-quote { color: #333; }
+  .gradient-text { color: #1766bc; }
+  .diagram-wrap { overflow: visible; }
+  .diagram { min-width: 0; }
+}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">◇</div>
+    <div>
+      UML PRESENTATION
+      <small>System Analysis & Design</small>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button class="btn" id="printBtn" title="Cetak atau simpan PDF">↗ PDF</button>
+    <button class="btn primary" id="fullBtn" title="Mode layar penuh">⛶ Fullscreen</button>
+  </div>
+</header>
+
+<div class="progress-track">
+  <div class="progress-fill" id="progress"></div>
+</div>
+
+<main>
+
+<!-- SLIDE 1 -->
+<section class="slide active" data-title="Pembukaan">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">Unified Modeling Language</div>
+      <h1><span class="gradient-text">Use Case</span><br>Diagram</h1>
+      <p class="lead">
+        Memahami interaksi antara pengguna dan sistem melalui studi kasus
+        <strong style="color:#e8f2ff">E-Commerce & Penjualan HP</strong>.
+        Dari melihat produk hingga pesanan diterima pelanggan.
+      </p>
+      <div class="tags">
+        <span class="tag">UML</span>
+        <span class="tag">System Analysis</span>
+        <span class="tag">E-Commerce</span>
+        <span class="tag">Smartphone Store</span>
+      </div>
+      <div style="margin-top:32px">
+        <button class="btn primary" data-go="1">Mulai Presentasi →</button>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div style="font-size:10px;color:#c6e4ff">SMARTPHONE STORE</div>
+          <div class="fake-product">📱</div>
+          <div style="font-size:12px;font-weight:800">Smartphone Pro</div>
+          <div class="fake-line"></div>
+          <div class="fake-line short"></div>
+          <div style="font-size:11px;color:#69f0d2;margin-top:13px">Rp 8.999.000</div>
+          <div style="background:#4d8dff;padding:6px;border-radius:6px;text-align:center;font-size:10px;margin-top:10px">Beli Sekarang</div>
+        </div>
+      </div>
+      <div class="art-caption">Satu sistem, berbagai aktor, interaksi yang terstruktur.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2 -->
+<section class="slide" data-title="Pengertian">
+  <div class="section-head">
+    <div class="eyebrow">01 / Fundamental</div>
+    <h2>Apa itu <span class="gradient-text">Use Case Diagram?</span></h2>
+    <p class="lead">
+      Use Case Diagram adalah diagram UML yang menggambarkan fungsi-fungsi
+      yang disediakan sistem dan hubungan antara fungsi tersebut dengan aktor
+      yang berinteraksi dengannya.
+    </p>
+  </div>
+  <div class="grid-3">
+    <article class="card">
+      <div class="card-icon">👤</div>
+      <div class="number">KOMPONEN 01</div>
+      <h3>Actor</h3>
+      <p>Pihak di luar sistem yang berinteraksi dengan sistem. Dapat berupa manusia atau sistem eksternal.</p>
+    </article>
+    <article class="card">
+      <div class="card-icon">⬭</div>
+      <div class="number">KOMPONEN 02</div>
+      <h3>Use Case</h3>
+      <p>Fungsi atau layanan yang dapat dilakukan melalui sistem, misalnya login atau checkout.</p>
+    </article>
+    <article class="card">
+      <div class="card-icon">▱</div>
+      <div class="number">KOMPONEN 03</div>
+      <h3>System Boundary</h3>
+      <p>Persegi panjang yang menunjukkan batas sistem dan memuat use case yang menjadi bagiannya.</p>
+    </article>
+  </div>
+  <div class="callout">
+    <strong>Tujuan utama:</strong> memperlihatkan apa yang dapat dilakukan sistem
+    dari sudut pandang pengguna, bukan menjelaskan kode program atau algoritma internalnya.
+  </div>
+</section>
+
+<!-- SLIDE 3 -->
+<section class="slide" data-title="Studi Kasus">
+  <div class="section-head">
+    <div class="eyebrow">02 / Case Study</div>
+    <h2>Sistem E-Commerce <span class="gradient-text">Penjualan HP</span></h2>
+    <p>Bayangkan sebuah toko smartphone yang melayani pembelian secara online.</p>
+  </div>
+  <div class="grid-2">
+    <article class="card">
+      <div class="card-icon">🛍️</div>
+      <h3>Fungsi untuk pelanggan</h3>
+      <ul class="check-list">
+        <li>Melihat katalog dan detail HP.</li>
+        <li>Mencari produk dan memeriksa stok.</li>
+        <li>Mengelola keranjang belanja.</li>
+        <li>Membuat pesanan dan melakukan pembayaran.</li>
+        <li>Melihat status pengiriman pesanan.</li>
+      </ul>
+    </article>
+    <article class="card">
+      <div class="card-icon">⚙️</div>
+      <h3>Fungsi pengelola toko</h3>
+      <ul class="check-list">
+        <li>Mengelola data produk dan harga.</li>
+        <li>Memperbarui stok smartphone.</li>
+        <li>Memverifikasi pesanan dan pembayaran.</li>
+        <li>Mengatur proses pengiriman.</li>
+        <li>Membuat laporan penjualan.</li>
+      </ul>
+    </article>
+  </div>
+  <div class="callout">
+    <strong>Ruang lingkup:</strong> diagram berikut memodelkan aplikasi toko HP
+    online. Penyedia pembayaran dan layanan kurir digambarkan sebagai sistem
+    eksternal ketika memang berinteraksi melalui integrasi sistem.
+  </div>
+</section>
+
+<!-- SLIDE 4 -->
+<section class="slide" data-title="Komponen Diagram">
+  <div class="section-head">
+    <div class="eyebrow">03 / Notasi UML</div>
+    <h2>Mengenal bentuk-bentuk <span class="gradient-text">diagram</span></h2>
+    <p>Setiap bentuk memiliki arti tersendiri. Kenali simbol sebelum membaca hubungan antarbagian.</p>
+  </div>
+
+  <div class="grid-2">
+    <article class="card relation-card">
+      <div class="relation-visual">
+        <svg viewBox="0 0 360 80" role="img" aria-label="Simbol aktor manusia">
+          <g stroke="#53e0ed" stroke-width="3" fill="none" stroke-linecap="round">
+            <circle cx="50" cy="16" r="9"/>
+            <path d="M50 25 V49 M30 34 H70 M50 49 L34 70 M50 49 L66 70"/>
+          </g>
+          <text x="88" y="37" fill="#f4f7ff" font-size="16" font-weight="700">Actor</text>
+          <text x="88" y="56" fill="#9aabc6" font-size="11">Pengguna atau sistem eksternal</text>
+        </svg>
+      </div>
+      <div>
+        <h3>Aktor</h3>
+        <p>Digambarkan sebagai figur manusia sederhana. Namanya diletakkan di bawah atau di dekat figur.</p>
+        <span class="syntax">Contoh: Pelanggan</span>
+      </div>
+    </article>
+
+    <article class="card relation-card">
+      <div class="relation-visual">
+        <svg viewBox="0 0 360 80" role="img" aria-label="Simbol use case berbentuk oval">
+          <ellipse cx="112" cy="40" rx="85" ry="25" fill="#173452" stroke="#53e0ed" stroke-width="2"/>
+          <text x="112" y="45" fill="#f4f7ff" text-anchor="middle" font-size="14">Checkout</text>
+          <text x="222" y="44" fill="#9aabc6" font-size="12">Fungsi sistem</text>
+        </svg>
+      </div>
+      <div>
+        <h3>Use Case</h3>
+        <p>Berbentuk elips atau oval. Tuliskan nama fungsi dengan frasa kerja yang jelas.</p>
+        <span class="syntax">Contoh: Memproses Pesanan</span>
+      </div>
+    </article>
+
+    <article class="card relation-card">
+      <div class="relation-visual">
+        <svg viewBox="0 0 360 80" role="img" aria-label="Batas sistem berupa persegi panjang">
+          <rect x="32" y="9" width="296" height="62" rx="4" fill="#13233a" stroke="#4d8dff" stroke-width="2"/>
+          <text x="180" y="34" fill="#53e0ed" font-size="13" text-anchor="middle">Sistem Toko HP</text>
+          <ellipse cx="180" cy="52" rx="56" ry="13" fill="#203a5d" stroke="#8ba9d5"/>
+          <text x="180" y="56" fill="#f4f7ff" font-size="10" text-anchor="middle">Checkout</text>
+        </svg>
+      </div>
+      <div>
+        <h3>System Boundary</h3>
+        <p>Persegi panjang bernama sistem. Use case berada di dalamnya, sedangkan aktor berada di luar.</p>
+        <span class="syntax">Contoh: Sistem E-Commerce</span>
+      </div>
+    </article>
+
+    <article class="card relation-card">
+      <div class="relation-visual">
+        <svg viewBox="0 0 360 80" role="img" aria-label="Garis asosiasi antara aktor dan use case">
+          <circle cx="35" cy="16" r="7" fill="none" stroke="#53e0ed" stroke-width="2"/>
+          <path d="M35 23 V42 M23 30 H47 M35 42 L25 55 M35 42 L45 55" stroke="#53e0ed" stroke-width="2" fill="none"/>
+          <path d="M60 39 H155" stroke="#f4f7ff" stroke-width="2"/>
+          <ellipse cx="250" cy="39" rx="89" ry="24" fill="#173452" stroke="#53e0ed" stroke-width="2"/>
+          <text x="250" y="44" fill="#f4f7ff" font-size="12" text-anchor="middle">Melihat Produk</text>
+        </svg>
+      </div>
+      <div>
+        <h3>Association</h3>
+        <p>Garis solid yang menunjukkan aktor berpartisipasi atau berinteraksi dengan use case.</p>
+        <span class="syntax">Contoh: Pelanggan — Melihat Produk</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- SLIDE 5 -->
+<section class="slide" data-title="Diagram Utama">
+  <div class="section-head">
+    <div class="eyebrow">04 / Main Diagram</div>
+    <h2>Use Case Diagram <span class="gradient-text">Toko HP</span></h2>
+    <p>Diagram konseptual yang memperlihatkan aktor utama, batas sistem, dan fungsi penjualan smartphone.</p>
+  </div>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 900 600" role="img" aria-label="Use Case Diagram sistem e-commerce penjualan HP dengan aktor Pelanggan, Admin, Payment Gateway, dan Kurir">
+      <defs>
+        <marker id="arrowMain" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#b7cbe8"/>
+        </marker>
+      </defs>
+
+      <!-- System boundary -->
+      <rect x="220" y="32" width="455" height="540" rx="12" fill="#102039" fill-opacity=".75" stroke="#4d8dff" stroke-width="2"/>
+      <text x="447" y="57" text-anchor="middle" fill="#53e0ed" font-size="16" font-weight="700">SISTEM E-COMMERCE PENJUALAN HP</text>
+
+      <!-- Actors -->
+      <g stroke="#53e0ed" stroke-width="2.5" fill="none" stroke-linecap="round">
+        <circle cx="92" cy="140" r="13"/>
+        <path d="M92 153 V190 M70 166 H114 M92 190 L75 214 M92 190 L109 214"/>
+      </g>
+      <text x="92" y="237" fill="#f4f7ff" font-size="14" text-anchor="middle">Pelanggan</text>
+
+      <g stroke="#ffc36c" stroke-width="2.5" fill="none" stroke-linecap="round">
+        <circle cx="92" cy="385" r="13"/>
+        <path d="M92 398 V435 M70 411 H114 M92 435 L75 459 M92 435 L109 459"/>
+      </g>
+      <text x="92" y="482" fill="#f4f7ff" font-size="14" text-anchor="middle">Admin</text>
+
+      <g stroke="#52dfa0" stroke-width="2.5" fill="none" stroke-linecap="round">
+        <circle cx="795" cy="160" r="13"/>
+        <path d="M795 173 V210 M773 186 H817 M795 210 L778 234 M795 210 L812 234"/>
+      </g>
+      <text x="795" y="256" fill="#f4f7ff" font-size="13" text-anchor="middle">Payment Gateway</text>
+
+      <g stroke="#ff82a7" stroke-width="2.5" fill="none" stroke-linecap="round">
+        <circle cx="795" cy="390" r="13"/>
+        <path d="M795 403 V440 M773 416 H817 M795 440 L778 464 M795 440 L812 464"/>
+      </g>
+      <text x="795" y="487" fill="#f4f7ff" font-size="14" text-anchor="middle">Kurir</text>
+
+      <!-- Association lines -->
+      <g stroke="#b7cbe8" stroke-width="1.4" fill="none" opacity=".85">
+        <path d="M112 166 L245 104"/>
+        <path d="M112 171 L245 165"/>
+        <path d="M112 175 L245 226"/>
+        <path d="M112 181 L245 287"/>
+        <path d="M112 184 L245 348"/>
+        <path d="M112 190 L245 409"/>
+        <path d="M112 197 L245 470"/>
+        <path d="M112 420 L245 531"/>
+
+        <path d="M675 165 L777 187"/>
+        <path d="M675 348 L777 418"/>
+      </g>
+
+      <!-- Use cases -->
+      <g fill="#193657" stroke="#53e0ed" stroke-width="1.5">
+        <ellipse cx="345" cy="104" rx="100" ry="23"/>
+        <ellipse cx="345" cy="165" rx="100" ry="23"/>
+        <ellipse cx="345" cy="226" rx="100" ry="23"/>
+        <ellipse cx="345" cy="287" rx="100" ry="23"/>
+        <ellipse cx="345" cy="348" rx="100" ry="23"/>
+        <ellipse cx="345" cy="409" rx="100" ry="23"/>
+        <ellipse cx="345" cy="470" rx="100" ry="23"/>
+        <ellipse cx="345" cy="531" rx="100" ry="23"/>
+      </g>
+      <g fill="#f4f7ff" font-size="13" text-anchor="middle">
+        <text x="345" y="109">Melihat Produk</text>
+        <text x="345" y="170">Mencari HP</text>
+        <text x="345" y="231">Mengelola Keranjang</text>
+        <text x="345" y="292">Checkout</text>
+        <text x="345" y="353">Memproses Pembayaran</text>
+        <text x="345" y="414">Melacak Pesanan</text>
+        <text x="345" y="475">Mengelola Produk</text>
+        <text x="345" y="536">Mengelola Stok</text>
+      </g>
+
+      <g fill="#193657" stroke="#52dfa0" stroke-width="1.5">
+        <ellipse cx="570" cy="165" rx="86" ry="23"/>
+        <ellipse cx="570" cy="348" rx="86" ry="23"/>
+      </g>
+      <g fill="#f4f7ff" font-size="12" text-anchor="middle">
+        <text x="570" y="170">Validasi Pembayaran</text>
+        <text x="570" y="353">Mengatur Pengiriman</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#53e0ed"></i> Pelanggan / interaksi</span>
+    <span><i class="dot" style="background:#ffc36c"></i> Pengelolaan toko</span>
+    <span><i class="dot" style="background:#52dfa0"></i> Integrasi eksternal</span>
+    <span><i class="dot" style="background:#4d8dff"></i> Batas sistem</span>
+  </div>
+
+  <div class="callout">
+    <strong>Cara membaca:</strong> aktor berada di luar persegi panjang, fungsi
+    sistem berada di dalamnya, dan garis solid menunjukkan hubungan interaksi.
+    Diagram ini merupakan ilustrasi konseptual; relasi teknis antarfungsi dapat
+    diperjelas dengan diagram relasi pada slide berikutnya.
+  </div>
+</section>
+
+<!-- SLIDE 6 -->
+<section class="slide" data-title="Association">
+  <div class="section-head">
+    <div class="eyebrow">05 / Relationship 01</div>
+    <h2>Association <span class="gradient-text">Relationship</span></h2>
+    <p>Relasi yang menunjukkan adanya komunikasi atau keterlibatan antara aktor dengan suatu use case.</p>
+  </div>
+
+  <div class="grid-2">
+    <article class="card">
+      <div class="relation-visual">
+        <svg viewBox="0 0 360 80" role="img" aria-label="Garis solid tanpa panah untuk association">
+          <circle cx="28" cy="16" r="7" fill="none" stroke="#53e0ed" stroke-width="2"/>
+          <path d="M28 23 V42 M16 30 H40 M28 42 L19 54 M28 42 L37 54" stroke="#53e0ed" stroke-width="2" fill="none"/>
+          <path d="M55 38 H175" stroke="#f4f7ff" stroke-width="2.5"/>
+          <ellipse cx="266" cy="38" rx="80" ry="23" fill="#173452" stroke="#53e0ed" stroke-width="2"/>
+          <text x="266" y="43" fill="#f4f7ff" font-size="13" text-anchor="middle">Melihat Produk</text>
+        </svg>
+      </div>
+      <h3>Bentuk relasi</h3>
+      <p><strong style="color:#eaf3ff">Garis solid</strong> yang menghubungkan aktor dengan use case. Biasanya tidak menggunakan kepala panah.</p>
+    </article>
+    <article class="card">
+      <h3>Contoh dalam toko HP</h3>
+      <p>Pelanggan terhubung dengan use case Melihat Produk karena pelanggan dapat melihat katalog HP.</p>
+      <span class="syntax">Pelanggan — Melihat Produk</span>
+      <p style="margin-top:15px">Admin juga dapat terhubung dengan use case Mengelola Stok untuk memperbarui jumlah unit smartphone.</p>
+      <span class="syntax">Admin — Mengelola Stok</span>
+    </article>
+  </div>
+  <div class="callout">
+    <strong>Inti association:</strong> relasi ini menjawab pertanyaan “aktor mana
+    yang berinteraksi dengan fungsi sistem ini?”
+  </div>
+</section>
+
+<!-- SLIDE 7 -->
+<section class="slide" data-title="Include">
+  <div class="section-head">
+    <div class="eyebrow">06 / Relationship 02</div>
+    <h2><span class="gradient-text">Include</span> Relationship</h2>
+    <p>Digunakan ketika suatu use case selalu melibatkan perilaku use case lain sebagai bagian dari prosesnya.</p>
+  </div>
+
+  <div class="grid-2">
+    <article class="card">
+      <div class="relation-visual">
+        <svg viewBox="0 0 360 80" role="img" aria-label="Garis putus-putus berpanah terbuka dengan label include">
+          <defs>
+            <marker id="incArrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+              <path d="M1 1 L8 4.5 L1 8" fill="none" stroke="#53e0ed" stroke-width="1.5"/>
+            </marker>
+          </defs>
+          <ellipse cx="78" cy="38" rx="65" ry="22" fill="#173452" stroke="#53e0ed" stroke-width="1.5"/>
+          <text x="78" y="42" fill="#fff" font-size="12" text-anchor="middle">Checkout</text>
+          <path d="M145 38 H214" stroke="#53e0ed" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#incArrow)"/>
+          <text x="180" y="27" fill="#53e0ed" font-size="11" text-anchor="middle">&lt;&lt;include&gt;&gt;</text>
+          <ellipse cx="285" cy="38" rx="67" ry="22" fill="#173452" stroke="#53e0ed" stroke-width="1.5"/>
+          <text x="285" y="42" fill="#fff" font-size="12" text-anchor="middle">Validasi Stok</text>
+        </svg>
+      </div>
+      <h3>Bentuk relasi</h3>
+      <p>Garis putus-putus dengan panah terbuka dan label <code>&lt;&lt;include&gt;&gt;</code>.</p>
+    </article>
+    <article class="card">
+      <h3>Contoh dalam toko HP</h3>
+      <p>Sebelum pesanan dapat diproses, sistem perlu memeriksa ketersediaan stok. Pemeriksaan stok menjadi bagian wajib dari alur checkout yang dimodelkan.</p>
+      <span class="syntax">Checkout → &lt;&lt;include&gt;&gt; → Validasi Stok</span>
+      <p style="margin-top:15px">Arah panah dimulai dari use case yang memasukkan perilaku menuju use case yang disertakan.</p>
+    </article>
+  </div>
+  <div class="callout">
+    <strong>Ingat:</strong> include berarti perilaku yang disertakan merupakan
+    bagian wajib dari alur use case utama yang dimodelkan, bukan fitur opsional.
+  </div>
+</section>
+
+<!-- SLIDE 8 -->
+<section class="slide" data-title="Extend">
+  <div class="section-head">
+    <div class="eyebrow">07 / Relationship 03</div>
+    <h2><span class="gradient-text">Extend</span> Relationship</h2>
+    <p>Digunakan untuk menambahkan perilaku opsional atau bersyarat ke dalam use case dasar.</p>
+  </div>
+
+  <div class="grid-2">
+    <article class="card">
+      <div class="relation-visual">
+        <svg viewBox="0 0 360 80" role="img" aria-label="Garis putus-putus extend dengan panah terbuka mengarah ke use case dasar">
+          <defs>
+            <marker id="extArrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+              <path d="M1 1 L8 4.5 L1 8" fill="none" stroke="#ffc36c" stroke-width="1.5"/>
+            </marker>
+          </defs>
+          <ellipse cx="76" cy="38" rx="66" ry="22" fill="#3c2c20" stroke="#ffc36c" stroke-width="1.5"/>
+          <text x="76" y="42" fill="#fff" font-size="12" text-anchor="middle">Gunakan Kupon</text>
+          <path d="M145 38 H214" stroke="#ffc36c" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#extArrow)"/>
+          <text x="180" y="27" fill="#ffc36c" font-size="11" text-anchor="middle">&lt;&lt;extend&gt;&gt;</text>
+          <ellipse cx="285" cy="38" rx="67" ry="22" fill="#173452" stroke="#53e0ed" stroke-width="1.5"/>
+          <text x="285" y="42" fill="#fff" font-size="12" text-anchor="middle">Checkout</text>
+        </svg>
+      </div>
+      <h3>Bentuk relasi</h3>
+      <p>Garis putus-putus dengan panah terbuka dan label <code>&lt;&lt;extend&gt;&gt;</code>.</p>
+    </article>
+    <article class="card">
+      <h3>Contoh dalam toko HP</h3>
+      <p>Pelanggan bisa menggunakan kupon diskon saat checkout, tetapi transaksi tetap dapat dilakukan tanpa kupon.</p>
+      <span class="syntax">Gunakan Kupon → &lt;&lt;extend&gt;&gt; → Checkout</span>
+      <p style="margin-top:15px">Panah mengarah dari use case tambahan menuju use case dasar yang diperluas.</p>
+    </article>
+  </div>
+  <div class="callout">
+    <strong>Ingat:</strong> extend menunjukkan perilaku tambahan yang terjadi
+    jika kondisi tertentu terpenuhi. Contohnya, penggunaan kupon hanya berlaku
+    jika pelanggan mempunyai kupon yang valid.
+  </div>
+</section>
+
+<!-- SLIDE 9 -->
+<section class="slide" data-title="Generalization">
+  <div class="section-head">
+    <div class="eyebrow">08 / Relationship 04</div>
+    <h2><span class="gradient-text">Generalization</span></h2>
+    <p>Menunjukkan hubungan pewarisan atau spesialisasi antara aktor dengan aktor, atau antara use case dengan use case.</p>
+  </div>
+
+  <div class="grid-2">
+    <article class="card">
+      <div class="relation-visual">
+        <svg viewBox="0 0 360 100" role="img" aria-label="Panah segitiga kosong generalization mengarah ke induk">
+          <defs>
+            <marker id="genArrow" markerWidth="13" markerHeight="13" refX="12" refY="6" orient="auto">
+              <path d="M1 1 L12 6 L1 11 Z" fill="#0b1425" stroke="#53e0ed" stroke-width="1.5"/>
+            </marker>
+          </defs>
+          <rect x="15" y="55" width="105" height="32" rx="7" fill="#173452" stroke="#53e0ed"/>
+          <text x="67" y="75" fill="#fff" font-size="11" text-anchor="middle">Admin</text>
+          <rect x="240" y="7" width="105" height="32" rx="7" fill="#173452" stroke="#53e0ed"/>
+          <text x="292" y="27" fill="#fff" font-size="11" text-anchor="middle">Pengguna</text>
+          <path d="M120 62 L213 25 L239 25" stroke="#53e0ed" stroke-width="2" fill="none" marker-end="url(#genArrow)"/>
+        </svg>
+      </div>
+      <h3>Bentuk relasi</h3>
+      <p>Garis solid dengan kepala panah berbentuk segitiga kosong. Segitiga mengarah ke induk atau elemen yang lebih umum.</p>
+    </article>
+    <article class="card">
+      <h3>Contoh dalam toko HP</h3>
+      <p>Admin dapat dimodelkan sebagai spesialisasi dari Pengguna Sistem apabila keduanya mewarisi interaksi atau hak akses umum yang sesuai.</p>
+      <span class="syntax">Admin —▷ Pengguna Sistem</span>
+      <p style="margin-top:15px">Untuk use case, misalnya beberapa jenis pembayaran dapat menjadi spesialisasi dari use case Pembayaran jika model memang memerlukan perilaku yang dibedakan.</p>
+    </article>
+  </div>
+  <div class="callout">
+    <strong>Ingat:</strong> generalization bukan relasi untuk menunjukkan urutan
+    proses. Relasi ini menyatakan bahwa elemen khusus mewarisi karakteristik
+    elemen yang lebih umum.
+  </div>
+</section>
+
+<!-- SLIDE 10 -->
+<section class="slide" data-title="Perbandingan Relasi">
+  <div class="section-head">
+    <div class="eyebrow">09 / Quick Reference</div>
+    <h2>Perbedaan setiap <span class="gradient-text">relasi UML</span></h2>
+    <p>Gunakan tabel berikut sebagai panduan cepat saat membaca atau menggambar diagram.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Relasi</th>
+          <th>Bentuk garis</th>
+          <th>Makna</th>
+          <th>Contoh toko HP</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Association</strong></td>
+          <td>Garis solid</td>
+          <td>Interaksi aktor dengan use case.</td>
+          <td>Pelanggan — Melihat Produk</td>
+        </tr>
+        <tr>
+          <td><strong>Include</strong></td>
+          <td>Garis putus-putus, panah terbuka, <code>&lt;&lt;include&gt;&gt;</code></td>
+          <td>Perilaku yang disertakan sebagai bagian wajib dari alur utama.</td>
+          <td>Checkout → Validasi Stok</td>
+        </tr>
+        <tr>
+          <td><strong>Extend</strong></td>
+          <td>Garis putus-putus, panah terbuka, <code>&lt;&lt;extend&gt;&gt;</code></td>
+          <td>Perilaku tambahan yang bersyarat atau opsional.</td>
+          <td>Gunakan Kupon → Checkout</td>
+        </tr>
+        <tr>
+          <td><strong>Generalization</strong></td>
+          <td>Garis solid dengan segitiga kosong</td>
+          <td>Spesialisasi atau pewarisan dari elemen umum.</td>
+          <td>Admin → Pengguna Sistem</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <strong>Perhatikan arah panah:</strong> include mengarah ke use case yang
+    disertakan, extend mengarah ke use case dasar yang diperluas, dan
+    generalization mengarah ke induk. Association biasanya cukup berupa garis
+    solid tanpa panah.
+  </div>
+</section>
+
+<!-- SLIDE 11 -->
+<section class="slide" data-title="Alur Pembelian">
+  <div class="section-head">
+    <div class="eyebrow">10 / Business Flow</div>
+    <h2>Alur pembelian <span class="gradient-text">smartphone</span></h2>
+    <p>Contoh skenario penggunaan sistem dari awal sampai pelanggan menerima pesanan.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <h3>Pelanggan mencari HP</h3>
+        <p>Pelanggan membuka katalog, mencari merek atau model, lalu melihat harga dan spesifikasi produk.</p>
+        <span class="actor-pill">Pelanggan</span>
+        <span class="actor-pill">Melihat Produk</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <h3>Menambahkan ke keranjang</h3>
+        <p>Pelanggan memilih varian produk, jumlah, dan memasukkan barang ke keranjang belanja.</p>
+        <span class="actor-pill">Pelanggan</span>
+        <span class="actor-pill">Mengelola Keranjang</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <h3>Checkout dan validasi stok</h3>
+        <p>Sistem memeriksa ketersediaan produk, alamat pengiriman, serta total tagihan sebelum pesanan diproses.</p>
+        <span class="actor-pill">Checkout</span>
+        <span class="actor-pill">Include: Validasi Stok</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <h3>Pembayaran dikonfirmasi</h3>
+        <p>Pelanggan membayar melalui metode yang tersedia. Payment gateway dapat memvalidasi transaksi jika terintegrasi.</p>
+        <span class="actor-pill">Pelanggan</span>
+        <span class="actor-pill">Payment Gateway</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <h3>Pesanan dikirim</h3>
+        <p>Admin menyiapkan pesanan, kurir mengirimkan HP, dan pelanggan melacak status pengiriman sampai pesanan diterima.</p>
+        <span class="actor-pill">Admin</span>
+        <span class="actor-pill">Kurir</span>
+        <span class="actor-pill">Melacak Pesanan</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 12 -->
+<section class="slide" data-title="Kesimpulan">
+  <div class="center" style="padding:30px 0 20px">
+    <div class="eyebrow">11 / Conclusion</div>
+    <h2>Memahami sistem melalui <span class="gradient-text">interaksi</span></h2>
+    <p class="big-quote">
+      Use Case Diagram membantu kita melihat siapa yang menggunakan sistem,
+      fungsi apa yang tersedia, dan bagaimana fungsi-fungsi tersebut saling
+      berhubungan.
+    </p>
+  </div>
+
+  <div class="grid-2" style="margin-top:35px">
+    <article class="card">
+      <div class="card-icon">◈</div>
+      <h3>Yang perlu diingat</h3>
+      <ul class="check-list">
+        <li>Aktor berada di luar batas sistem.</li>
+        <li>Use case digambarkan dengan bentuk oval.</li>
+        <li>Association menggunakan garis solid.</li>
+        <li>Include menunjukkan perilaku yang disertakan.</li>
+        <li>Extend menunjukkan perilaku tambahan bersyarat.</li>
+        <li>Generalization menunjukkan pewarisan atau spesialisasi.</li>
+      </ul>
+    </article>
+    <article class="card">
+      <div class="card-icon">🚀</div>
+      <h3>Manfaat dalam pengembangan</h3>
+      <ul class="check-list">
+        <li>Membantu menentukan ruang lingkup sistem.</li>
+        <li>Mempermudah komunikasi dengan pemangku kepentingan.</li>
+        <li>Mengidentifikasi kebutuhan fungsional.</li>
+        <li>Menjadi dasar untuk analisis dan desain berikutnya.</li>
+      </ul>
+    </article>
+  </div>
+
+  <div class="callout" style="text-align:center;margin-top:30px">
+    <strong style="font-size:19px">Terima kasih</strong>
+    <p style="margin:5px 0 0">Presentasi Use Case Diagram — E-Commerce & Penjualan HP</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-nav">
+  <div class="nav-side">
+    <button class="btn" id="prevBtn" aria-label="Slide sebelumnya">← <span class="hide-mobile">Kembali</span></button>
+    <span class="slide-counter" id="counter" aria-live="polite">01 / 12</span>
+    <button class="btn primary" id="nextBtn" aria-label="Slide berikutnya">Lanjut →</button>
+  </div>
+
+  <div class="dots" id="dots" aria-label="Navigasi slide"></div>
+
+  <div class="key-hint">
+    Navigasi <kbd>←</kbd> <kbd>→</kbd> &nbsp; Fullscreen <kbd>F</kbd>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+
+  const slides = Array.from(document.querySelectorAll(".slide"));
+  const progress = document.getElementById("progress");
+  const counter = document.getElementById("counter");
+  const dotsContainer = document.getElementById("dots");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const fullBtn = document.getElementById("fullBtn");
+  const printBtn = document.getElementById("printBtn");
+
+  let current = 0;
+
+  // Membuat tombol navigasi berdasarkan jumlah slide.
+  slides.forEach((slide, index) => {
+    const dot = document.createElement("button");
+    dot.className = "nav-dot";
+    dot.type = "button";
+    dot.setAttribute("aria-label", "Buka slide " + (index + 1) + ": " + slide.dataset.title);
+    dot.title = slide.dataset.title;
+    dot.addEventListener("click", () => showSlide(index));
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = Array.from(dotsContainer.children);
+
+  function showSlide(index) {
+    current = Math.max(0, Math.min(index, slides.length - 1));
+
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === current);
+      slide.setAttribute("aria-hidden", i === current ? "false" : "true");
+    });
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === current);
+      if (i === current) {
+        dot.setAttribute("aria-current", "step");
+      } else {
+        dot.removeAttribute("aria-current");
+      }
+    });
+
+    counter.textContent =
+      String(current + 1).padStart(2, "0") + " / " +
+      String(slides.length).padStart(2, "0");
+
+    progress.style.width = ((current + 1) / slides.length * 100) + "%";
+
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === slides.length - 1;
+
+    prevBtn.style.opacity = current === 0 ? ".45" : "1";
+    nextBtn.style.opacity = current === slides.length - 1 ? ".45" : "1";
+
+    document.title = slides[current].dataset.title +
+      " | Use Case Diagram E-Commerce";
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function next() {
+    if (current < slides.length - 1) showSlide(current + 1);
+  }
+
+  function prev() {
+    if (current > 0) showSlide(current - 1);
+  }
+
+  prevBtn.addEventListener("click", prev);
+  nextBtn.addEventListener("click", next);
+  printBtn.addEventListener("click", () => window.print());
+
+  async function toggleFullscreen() {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    } catch (error) {
+      alert("Mode fullscreen tidak tersedia di browser ini.");
+    }
+  }
+
+  fullBtn.addEventListener("click", toggleFullscreen);
+
+  document.addEventListener("fullscreenchange", () => {
+    fullBtn.textContent = document.fullscreenElement
+      ? "⛶ Keluar Fullscreen"
+      : "⛶ Fullscreen";
+  });
+
+  // Tombol aksi pada slide pembuka.
+  document.querySelectorAll("[data-go]").forEach(button => {
+    button.addEventListener("click", () => {
+      showSlide(Number(button.dataset.go));
+    });
+  });
+
+  // Navigasi keyboard untuk presentasi.
+  document.addEventListener("keydown", event => {
+    const target = event.target;
+    if (target && ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName)) return;
+
+    if (event.key === "ArrowRight" || event.key === "PageDown") {
+      event.preventDefault();
+      next();
+    } else if (event.key === "ArrowLeft" || event.key === "PageUp") {
+      event.preventDefault();
+      prev();
+    } else if (event.key.toLowerCase() === "f" &&
+               !event.ctrlKey && !event.metaKey && !event.altKey) {
+      event.preventDefault();
+      toggleFullscreen();
+    } else if (event.key === "Home") {
+      showSlide(0);
+    } else if (event.key === "End") {
+      showSlide(slides.length - 1);
+    }
+  });
+
+  // Mendukung geser kiri/kanan pada perangkat sentuh.
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  document.addEventListener("touchstart", event => {
+    if (!event.touches.length) return;
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener("touchend", event => {
+    if (!event.changedTouches.length) return;
+
+    const dx = event.changedTouches[0].clientX - touchStartX;
+    const dy = event.changedTouches[0].clientY - touchStartY;
+
+    if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      if (dx < 0) next();
+      else prev();
+    }
+  }, { passive: true });
+
+  showSlide(0);
+})();
+</script>
+</body>
+</html>
